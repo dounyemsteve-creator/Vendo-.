@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VENDO - Marketplace Worldwide</title>
+<style>
+  *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Arial}
+  body{background:#0a0a0a; color:#fff}
+.section{padding:40px 20px; max-width:1200px; margin:0 auto}
+.title-row{display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px}
+.title-row h2{font-size:28px; color:#ff3d00}
+.muted{color:#888; font-size:14px}
+  #countrySelect{background:#1a1a1a; color:#fff; border:1px solid #ff3d00; padding:10px 15px; border-radius:8px; font-size:15px}
+.drop-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px}
+.drop-card{background:#141414; padding:15px; border-radius:15px; border:1px solid #222; transition:0.3s}
+.drop-card:hover{transform:translateY(-5px); border-color:#ff3d00}
+.drop-card img{width:100%; height:220px; object-fit:cover; border-radius:10px; margin-bottom:10px}
+.badge{display:inline-block; background:#ff3d00; color:#fff; padding:4px 10px; border-radius:20px; font-size:10px; font-weight:bold; margin-bottom:8px}
+.drop-card h3{font-size:15px; margin:8px 0; height:40px; overflow:hidden}
+.drop-card p{font-size:12px; color:#aaa; height:35px; overflow:hidden; margin-bottom:10px}
+.price-row{display:flex; justify-content:space-between; align-items:center; margin:10px 0}
+.price{color:#ff3d00; font-size:22px; font-weight:bold}
+.marge{color:#00ff88; font-size:11px; background:#00ff881a; padding:3px 8px; border-radius:5px}
+.primary{background:#ff3d00; color:#fff; border:none; padding:12px; border-radius:8px; width:100%; font-weight:bold; cursor:pointer}
+.primary:hover{background:#ff5722}
+.buy-panel{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px}
+.buy-card{background:#141414; padding:20px; border-radius:15px; display:flex; gap:15px; align-items:center}
+.buy-icon{font-size:30px}
+.footer{text-align:center; padding:30px; color:#666}
+</style>
+</head>
+<body>
+
+<!-- SECTION 1: BUY -->
+<section class="section" id="buySection">
+  <div class="title-row">
+    <div><h2>Buy on VENDO</h2><span class="muted">Simple process</span></div>
+  </div>
+  <div class="buy-panel">
+    <div class="buy-card">
+      <div class="buy-icon">🛒</div>
+      <div>
+        <h3>Cart → Checkout → Order</h3>
+        <p>Customers can review their products, pay and track delivery</p>
+      </div>
+    </div>
+    <div class="buy-card">
+      <div class="buy-icon">🚚</div>
+      <div>
+        <h3>Fast Worldwide Shipping</h3>
+        <p>Delivery to FR, US, CM and 50+ countries</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: 50 PRODUCTS WORLDWIDE -->
+<section class="section" id="productsSection">
+  <div class="title-row">
+    <div><h2 id="productsTitle">🔥 Hot Products 2026</h2><span class="muted">+5€ margin auto</span></div>
+    <select id="countrySelect" onchange="renderProducts()">
+      <option value="FR">🇫🇷 France</option>
+      <option value="US">🇺🇸 USA</option>
+      <option value="CM">🇨🇲 Cameroun</option>
+    </select>
+  </div>
+
+  <div class="drop-grid" id="productsGrid">
+    <!-- Products load here from products.js -->
+  </div>
+</section>
+
+<!-- SECTION 3: FOR DROPSHIPPERS -->
+<section class="section" id="dropshipSection">
+  <div class="title-row">
+    <div><h2>VENDO for dropshippers</h2><span class="muted">Start in 5 min</span></div>
+  </div>
+  <div class="drop-grid">
+    <div class="drop-card">
+      <div class="buy-icon">📦</div>
+      <h3>Find products</h3>
+      <p>Browse 50+ products, compare prices and choose winners</p>
+      <button class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Browse Now</button>
+    </div>
+    <div class="drop-card">
+      <div class="buy-icon">💰</div>
+      <h3>Set your margin</h3>
+      <p>We add +5€ automatically. You can change it in products.js</p>
+    </div>
+    <div class="drop-card">
+      <div class="buy-icon">🌍</div>
+      <h3>Multi-country</h3>
+      <p>Products and language adapt to each country automatically</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 VENDO STORE - All rights reserved</p>
+</footer>
+
+<script type="module">
+// 1. LIT TON FICHIER JS
+import { products, translations } from './src/data/products.js';
+
+window.renderProducts = function() {
+  const country = document.getElementById('countrySelect').value;
+  const t = translations[country];
+
+  // Change le titre
+  document.getElementById('productsTitle').innerText = t.title;
+
+  // Filtre par pays
+  const filtered = products.filter(p => p.pays === country);
+
+  // Affiche les cartes
+  document.getElementById('productsGrid').innerHTML = filtered.map(p => `
+    <div class="drop-card">
+      <span class
